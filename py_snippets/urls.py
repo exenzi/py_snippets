@@ -1,4 +1,3 @@
-import debug_toolbar
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -22,7 +21,6 @@ urlpatterns = [
         template_name='users/password_change.html'), name='password_change'),
     path('password-change-done', auth_views.PasswordChangeDoneView.as_view(
         template_name='users/password_change_done.html'), name='password_change_done'),
-    path('__debug__/', include(debug_toolbar.urls)),
     path('', include('website.urls'))
 ] 
 
