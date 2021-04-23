@@ -1,0 +1,50 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <div class="snippet card">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">{{ snippet.title }}</h5>
+                    <div class="copy-target">
+                        <pre class="card-text"><code id="{{ snippet.slug }}" class="lang-python">{{ snippet.code }}</code></pre>
+                        <button class="btn btn-secondary copy-to-clipboard" data="{{ snippet.slug }}" data-bs-toggle="popover"
+                            data-bs-placement="top" data-bs-content="Скопировано">Копировать</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>
+                        {% for tag in snippet.tags.all %}
+                            <a style="text-decoration: none;" href="{{ tag.get_absolute_url }}">
+                                <span class="badge bg-primary">{{ tag }} </span>
+                            </a>
+                        {% endfor %}
+                    </p>
+                    <div class="row gy-3">
+                        <div class="col-md-12 col-lg-6">
+                            <p class="card-text text-muted">{{ snippet.view_count }} просмотров<br>Опубликовано {{ snippet.pub_date }}</p>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            {% if snippet.author == user %}
+                            <div class="input-group mb-3">
+                                <a href="{% url 'snippet-update' snippet.slug %}" class="btn btn-outline-primary">Изменить</a>
+                                <a href="{% url 'snippet-delete' snippet.slug %}" class="btn btn-outline-danger">Удалить</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p class="card-text">{{ snippet.description }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+            <div class="card">
+                <img class="mx-auto mt-3 avatar-circle" src="{{ snippet.author.profile.image.url }}" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">{{ snippet.author.first_name }} {{ snippet.author.last_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@{{ snippet.author.username }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
