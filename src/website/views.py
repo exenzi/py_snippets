@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
+from functools import reduce
 
 from .models import Snippet, Tag
 
@@ -8,7 +10,30 @@ class IndexView(ListView):
     model = Snippet
     template_name = 'website/index.html'
     ordering = ['-pub_date']
-    paginate_by = 12
+    paginate_by = 3
+
+
+class SearchView(ListView):
+    model = Snippet
+    template_name = 'website/search_results.html'
+    ordering = ['-pub_date']
+    paginate_by = 3
+
+    def get_queryset(self):
+        query = self.request.GET.get('q').strip()
+        query_list = query.split()
+        q_list = []
+        for q in query_list:
+            q_list.append(Q(title__icontains=q) | Q(code__icontains=q))
+        object_list = Snippet.objects.filter(*q_list)
+        return object_list
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['query'] = self.request.GET.get('q').strip()
+        query_list = context['query'].split()
+        context['q'] = f"q={'+'.join(query_list)}&"
+        return context
 
 def snippet_detail(request, slug):
     snippet = get_object_or_404(Snippet, slug__iexact=slug)
