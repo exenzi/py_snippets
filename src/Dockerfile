@@ -4,8 +4,6 @@ WORKDIR /app
 
 # Вывод в терминал без буферизации:
 ENV PYTHONUNBUFFERED=1
-ENV WORKON_HOME=/app/.venvs
-VOLUME [ "/app/.venvs" ]
 
 RUN /usr/local/bin/python -m pip install --upgrade pip
 
@@ -31,10 +29,8 @@ COPY Pipfile.lock .
 
 COPY Pipfile .
 
-RUN pipenv install
+RUN pipenv  --system --deploy --ignore-pipfile
 
-COPY . /app
+COPY . .
 
 EXPOSE 8000
-
-CMD ["pipenv", "run", "dev"]
