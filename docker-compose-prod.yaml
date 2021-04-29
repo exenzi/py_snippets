@@ -15,7 +15,7 @@ services:
             ./.env
         volumes:
             - ./src:/app
-        command: pipenv run dev
+        command: pipenv run start
         ports:
             - '8000:8000'
         depends_on:
