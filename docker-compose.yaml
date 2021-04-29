@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+    db:
+        image: postgres:alpine
+        container_name: django-db
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        env_file:
+            ./.env
+    web:
+        container_name: django-web
+        build: ./src
+        env_file:
+            ./.env
+        volumes:
+            - ./src:/app
+        command: sh -c "sleep 3 &&
+                python manage.py makemigrations &&
+                python manage.py migrate &&
+                python manage.py runserver 0.0.0.0:8000"
+        ports:
+            - '8000:8000'
+        depends_on:
+            - db
+volumes:
+    pgdata:
