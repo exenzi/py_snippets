@@ -25,7 +25,7 @@ class SearchView(ListView):
         q_list = []
         for q in query_list:
             q_list.append(Q(title__icontains=q) | Q(code__icontains=q))
-        object_list = Snippet.objects.filter(*q_list)
+        object_list = Snippet.objects.filter(*q_list).order_by('-pub_date')
         return object_list
 
     def get_context_data(self, *args, **kwargs):
@@ -43,7 +43,7 @@ def snippet_detail(request, slug):
 
 class SnippetCreateView(LoginRequiredMixin, CreateView):
     model = Snippet
-    fields = ['title', 'slug', 'code', 'description', 'tags']
+    fields = ['title', 'code', 'description', 'tags']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
