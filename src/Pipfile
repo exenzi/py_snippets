@@ -15,3 +15,9 @@ autopep8 = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+mm = "python manage.py makemigrations"
+mi = "python manage.py migrate"
+dev = "python manage.py runserver 0.0.0.0:8000"
+csu = "python manage.py createsuperuser --noinput"
