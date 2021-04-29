@@ -1,7 +1,11 @@
 FROM python:alpine
 
+WORKDIR /app
+
 # Вывод в терминал без буферизации:
 ENV PYTHONUNBUFFERED=1
+ENV WORKON_HOME=/app/.venvs
+VOLUME [ "/app/.venvs" ]
 
 RUN /usr/local/bin/python -m pip install --upgrade pip
 
@@ -23,11 +27,9 @@ RUN apk --no-cache add \
     # psycorg2 deps
     postgresql-dev
 
-WORKDIR /app
+COPY Pipfile.lock .
 
 COPY Pipfile .
-
-COPY Pipfile.lock .
 
 RUN pipenv install
 
@@ -35,4 +37,4 @@ COPY . /app
 
 EXPOSE 8000
 
-CMD ["pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["pipenv", "run", "dev"]

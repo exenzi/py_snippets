@@ -8,9 +8,14 @@ django = "*"
 django-crispy-forms = "*"
 pillow = "*"
 gunicorn = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 autopep8 = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+dev = "/bin/sh -c 'sleep 3; python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000'"
+start = "/bin/sh -c 'sleep 3; python manage.py makemigrations && python manage.py migrate && gunicorn --workers 5 --bind 0.0.0.0:8000 py_snippets.wsgi:application'"
