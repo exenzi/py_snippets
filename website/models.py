@@ -3,6 +3,7 @@ from django.db.models.deletion import CASCADE
 from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from transliterate import slugify as translit_slugify
 
 User = get_user_model()
 
@@ -24,8 +25,9 @@ class Snippet(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        slug = translit_slugify(self.title)
         super().save(*args, **kwargs)
-        self.slug = f"{self.id}-{slugify(self.title)}"
+        self.slug = f"{self.id}-{slug}"
         return super().save(*args, **kwargs)
 
 class Tag(models.Model):

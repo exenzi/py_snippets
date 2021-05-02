@@ -9,6 +9,7 @@ django-crispy-forms = "*"
 pillow = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
+transliterate = "*"
 
 [dev-packages]
 autopep8 = "*"

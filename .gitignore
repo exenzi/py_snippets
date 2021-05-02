@@ -70,7 +70,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
-media/profile_pics/*
+**/profile_pics/*
 
 # Flask stuff:
 instance/
