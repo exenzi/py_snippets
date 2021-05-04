@@ -2,7 +2,8 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
-from functools import reduce
+from .forms import SnippetModelForm
+from .utils import create_tag_list, create_tag_str_list
 
 from .models import Snippet, Tag
 
@@ -10,14 +11,14 @@ class IndexView(ListView):
     model = Snippet
     template_name = 'website/index.html'
     ordering = ['-pub_date']
-    paginate_by = 3
+    paginate_by = 12
 
 
 class SearchView(ListView):
     model = Snippet
     template_name = 'website/search_results.html'
     ordering = ['-pub_date']
-    paginate_by = 3
+    paginate_by = 12
 
     def get_queryset(self):
         query = self.request.GET.get('q').strip()
@@ -43,19 +44,33 @@ def snippet_detail(request, slug):
 
 class SnippetCreateView(LoginRequiredMixin, CreateView):
     model = Snippet
-    fields = ['title', 'code', 'description', 'tags']
+    form_class = SnippetModelForm
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        super().form_valid(form)
+        
+        tag_list = create_tag_list(form.cleaned_data['tag_list'])
+        for tag in tag_list:
+            form.instance.tags.add(tag)
         return super().form_valid(form)
 
 
 class SnippetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Snippet
-    fields = ['title', 'slug', 'code', 'description', 'tags']
+    form_class = SnippetModelForm
+
+    def get_initial(self):
+        self.initial['tag_list'] = create_tag_str_list(self.object.tags.all())
+        return super().get_initial()
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        super().form_valid(form)
+
+        tag_list = create_tag_list(form.cleaned_data['tag_list'])
+        for tag in tag_list:
+            form.instance.tags.add(tag)
         return super().form_valid(form)
 
     def test_func(self):
