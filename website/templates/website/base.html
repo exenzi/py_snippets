@@ -20,38 +20,44 @@
     <nav class="navbar navbar-dark bg-dark navbar-expand-md">
         <div class="container">
             <a class="navbar-brand" href="{% url 'index' %}">PySnippets</a>
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Главная</a>
-                </li>
-                {% if user.is_authenticated %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialaccount_connections' %}">Профиль</a>
+                        <a class="nav-link" href="{% url 'index' %}">Главная</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_logout' %}">Выйти</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_login' %}">Войти</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_signup' %}">Регистрация</a>
-                    </li>
-                {% endif %}
-            </ul>
-            <form class="d-flex" method="get" action="{% url 'search' %}">
-                <div class="input-group">
-                    <input name="q" class="form-control" type="search" placeholder="Поиск" aria-label="Search" {% if query %}value={{ query }}{% endif %}>
-                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-                </div>
-            </form>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'socialaccount_connections' %}">Профиль</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_logout' %}">Выйти</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_login' %}">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_signup' %}">Регистрация</a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <form class="d-flex" method="get" action="{% url 'search' %}">
+                    <div class="input-group">
+                        <input name="q" class="form-control" type="search" placeholder="Поиск" aria-label="Search" {% if query %}value={{ query }}{% endif %}>
+                        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </nav>
     
     <div class="container mt-3">
-        <div class="alert alert-danger">
-            Здесь ещё нихера не работает. Сайт в разработке. https://t.me/rokitsky_ru
+        <div class="alert alert-warning">
+            Сайт находится в разработке. https://t.me/rokitsky_ru
         </div>
         {% if messages %}
             {% for message in messages %}
