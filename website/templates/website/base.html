@@ -70,12 +70,11 @@
                 </div>
             {% endfor %}
         {% endif %}
-        {% block content %}
-        {% endblock content %}
+        {% block content %}{% endblock content %}
     </div>
 
     <footer class="bg-light text-center p-4 mt-4 fixed-bottom">
-        © 2021 Copyright: pysnippets.ru | by Max Rokitsky @exenzi
+        © {% now 'Y' %} Copyright: pysnippets.ru | by Max Rokitsky @exenzi
     </footer>
 
     <script src="{% static 'website/js/bootstrap.bundle.min.js' %}"></script>
