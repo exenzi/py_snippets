@@ -2,11 +2,6 @@ body {
     padding-bottom: 100px;
 }
 
-.snippet-link {
-    text-decoration: none;
-    color: black;
-}
-
 .snippet-list .card-text code {
     height: 150px;
     overflow-x: auto;

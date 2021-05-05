@@ -8,31 +8,25 @@
         {% for snippet in object_list %}
         
         <div class="col-sm-12 col-md-6 col-xl-4">
-            <a class="snippet-link" href="{{ snippet.get_absolute_url }}">
-                <div class="snippet card h-100">
-                    <div class="card-body">
+            <div class="snippet card h-100">
+                <div class="card-body">
+                    <a class="snippet-link text-decoration-none text-reset" href="{{ snippet.get_absolute_url }}">
                         <h5 class="card-title">{{ snippet.title }}</h5>
-                        <div class="copy-target">
-                            <pre class="card-text"><code id="{{ snippet.slug }}" class="lang-python">{{ snippet.code }}</code></pre>
-                            <button class="btn btn-secondary copy-to-clipboard" data="{{ snippet.slug }}"
-                            data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Скопировано">Копировать</button>
-                        </div>
-                            <div class='mt-2'>
-                                {% for tag in snippet.tags.all %}
-                                    <a style="text-decoration: none;" href="{{ tag.get_absolute_url }}">
-                                        <span class="badge bg-primary">{{ tag }} </span>
-                                    </a>
-                                {% endfor %}
-                            </div>
+                    </a>
+                    <div class="copy-target">
+                        <pre class="card-text"><code id="{{ snippet.slug }}" class="lang-python">{{ snippet.code }}</code></pre>
+                        <button class="btn btn-secondary copy-to-clipboard" data="{{ snippet.slug }}"
+                        data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Скопировано">Копировать</button>
                     </div>
-                    
-                    <!-- <div class="card-footer text-muted d-flex justify-content-center">
-                        <span>
-                            <i class="bi bi-eye-fill"></i> {{ snippet.view_count }}
-                        </span>
-                    </div> -->
+                    <div class='mt-2'>
+                        {% for tag in snippet.tags.all %}
+                            <a style="text-decoration: none;" href="{{ tag.get_absolute_url }}">
+                                <span class="badge bg-primary">{{ tag }} </span>
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </a>
+            </div>
         </div>
         
         {% endfor %}
