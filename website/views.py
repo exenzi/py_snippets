@@ -68,6 +68,7 @@ class SnippetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form.instance.author = self.request.user
         super().form_valid(form)
 
+        form.instance.tags.clear()
         tag_list = create_tag_list(form.cleaned_data['tag_list'])
         for tag in tag_list:
             form.instance.tags.add(tag)
