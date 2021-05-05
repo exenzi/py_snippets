@@ -16,7 +16,7 @@ DEBUG = os.environ['DJANGO_DEBUG']
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = os.environ['DJANGO_HOST']
+    ALLOWED_HOSTS = [os.environ['DJANGO_HOST']]
 
 INSTALLED_APPS = [
     'website.apps.WebsiteConfig',
