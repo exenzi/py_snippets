@@ -1,15 +1,27 @@
-{% extends "website/base.html" %}
+{% extends "account/base.html" %}
 {% load crispy_forms_tags %}
-
 {% load i18n %}
 
+{% load account socialaccount %}
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
 <div class="col-sm-12 col-md-6 mx-auto">
 <h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>Зарегистрироваться с помощью соц. сети:</p>
+
+<div class="socialaccount_ballot">
+
+  {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+
+  <div class="my-2 login-or">{% trans 'or' %}</div>
+
+</div>
+{% endif %}
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
@@ -19,5 +31,8 @@
   {% endif %}
   <button class="btn btn-primary mt-3" type="submit">{% trans "Sign Up" %} &raquo;</button>
 </form>
+
+
+<p class="mt-2">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 </div>
 {% endblock %}
