@@ -14,5 +14,5 @@
     {% endfor %}
   {% endif %}
     <a title="{{provider.name}}" class="btn btn-primary socialaccount_provider {{provider.id}}" 
-      href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">Войти через <i class="bi bi-{{provider.id}}"></i> {{provider.name}}</a>
+      href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fab fa-{{provider.id}}"></i> {{provider.name}}</a>
 {% endfor %}
