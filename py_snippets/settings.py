@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'default')
 # Значение по-умолчанию добавлено,
 # т.к. manage.py отказывается работать даже для базовых операций.
 
-DEBUG = os.environ['DJANGO_DEBUG']
+DEBUG = os.getenv('DJANGO_DEBUG', False)
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
