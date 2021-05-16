@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'default')
 # Значение по-умолчанию добавлено,
 # т.к. manage.py отказывается работать даже для базовых операций.
 
-DEBUG = os.getenv('DJANGO_DEBUG', False)
+DEBUG = bool(os.getenv('DJANGO_DEBUG', False))
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.vk',
+
+    # Django REST Framework
+    'rest_framework',
 ]
 
 SITE_ID = 1
@@ -158,3 +161,15 @@ EMAIL_HOST = os.getenv('DJANGO_SMTP_SERVER')
 EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DJANGO_DEFAULT_FROM_EMAIL')
+
+
+# REST Framework
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2
+}

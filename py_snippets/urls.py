@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/profile/', users_views.ProfileView.as_view(), name='profile'),
     path('accounts/', include('allauth.urls')),
+    path('api/', include('api.urls')),
     path('', include('website.urls')),
 ] 
 

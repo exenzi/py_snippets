@@ -11,6 +11,8 @@ gunicorn = "*"
 psycopg2-binary = "*"
 transliterate = "*"
 django-allauth = "*"
+djangorestframework = "*"
+pygments = "*"
 
 [dev-packages]
 autopep8 = "*"
